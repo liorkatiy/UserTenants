@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { LoginComponent } from './Components/login/login.component';
-import { TenantsComponent } from './tenants/tenants.component';
+import { TenantsComponent } from './Components/tenants/tenants.component';
 
 @NgModule({
   declarations: [

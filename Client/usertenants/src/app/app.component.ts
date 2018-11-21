@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from './Components/login/login.component';
-import { LoginEventService } from './Services/login-event.service';
+import { LoginEventService } from './Services/loginEvent/login-event.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +8,8 @@ import { LoginEventService } from './Services/login-event.service';
 })
 export class AppComponent {
   isLogin: boolean;
-  ls: LoginEventService
 
-  constructor(ls: LoginEventService) {
-    this.ls = ls;
+  constructor(private ls: LoginEventService) {
     this.isLogin = false;
   }
 

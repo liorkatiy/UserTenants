@@ -10,8 +10,8 @@ export class LoginEventService {
   constructor() {
   }
 
-  logged() {
-    this.fire.emit(true);
+  logged(logged: boolean) {
+    this.fire.emit(logged);
   }
 
   getEmittedValue() {

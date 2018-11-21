@@ -1,11 +1,19 @@
 const tenantModel = require("../DBmodels/tenantModels");
 
-async function get(id) {
-  const query = id ? {
-    _id: id
-  } : {};
-  let result = await tenantModel.find(query);
-  return result;
+async function get(search) {
+  try {
+    const query = search ? {
+      "name": {
+        $regex: ".*" + search + ".*"
+      }
+    } : {};
+    let result = await tenantModel.find(query);
+    return result;
+  } catch (e) {
+    return {
+      error: e
+    };
+  }
 }
 
 /**
@@ -14,26 +22,31 @@ async function get(id) {
  */
 async function create(tenant) {
   try {
+    tenant._id = undefined;
     const result = await tenantModel.create(tenant);
     return result;
   } catch (e) {
-    return false;
+    return {
+      error: e
+    };
   }
 }
 
 /**
  * 
- * @param {{name:string,phoneNumber:string,address:string,financialDebt:string}} tenant 
+ * @param {{id:string,name:string,phoneNumber:string,address:string,financialDebt:string}} tenant 
  * @param {string} id
  */
-async function update(id, tenant) {
+async function update(tenant) {
   try {
     let result = await tenantModel.update({
-      _id: id
+      _id: tenant.id
     }, tenant);
-    return result;
+    return result.n > 0;
   } catch (e) {
-    return false;
+    return {
+      error: e
+    };
   }
 }
 
@@ -42,9 +55,11 @@ async function remove(id) {
     let result = await tenantModel.remove({
       _id: id
     });
-    return result;
+    return result.n > 0;
   } catch (e) {
-    return false;
+    return {
+      error: e
+    };
   }
 }
 

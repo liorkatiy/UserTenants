@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../../app.component';
-import { LoginEventService } from '../../Services/login-event.service';
-import { AccountService } from '../../Services/account.service';
+import { LoginEventService } from '../../Services/loginEvent/login-event.service';
+import { AccountService } from '../../Services/account/account.service';
+import { SessionStorageService } from '../../Services/sessionStorage/session-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginEventService,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private ssts: SessionStorageService) {
   }
 
   ngOnInit() {
@@ -24,11 +25,13 @@ export class LoginComponent implements OnInit {
   login() {
     this.accountService.login(this.username, this.password)
       .subscribe(response => {
-        if (response) {
-          this.loginService.logged();
+        if (response.body.item) {
+          this.loginService.logged(true);
+          this.ssts.getTokenCookie();
           alert("Login success");
+        } else {
+          alert("login failed");
         }
-        alert("login failed");
       });
   }
 }

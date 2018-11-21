@@ -1,3 +1,23 @@
-<p>
-  tenants works!
-</p>
+<form>
+  <input placeholder="Name" [(ngModel)]="newTenant.name" name="name" />
+  <input placeholder="Address" [(ngModel)]="newTenant.address" name="address" />
+  <input type="Phone Number" placeholder="Age" [(ngModel)]="newTenant.phoneNumber" name="phonenumber" />
+  <input placeholder="Financial Debt" [(ngModel)]="newTenant.financialDebt" name="financialdebt" />
+  <input type="submit" (click)="add()" />
+</form>
+
+<input placeholder="Search" #searchValue />
+<input type="button" value="search" (click)="search(searchValue.value)" />
+
+<div *ngFor="let tenant of tenants">
+  <p> Name:
+    <input [(ngModel)]="tenant.name" /> </p>
+  <p>Address:
+    <input [(ngModel)]="tenant.address" /></p>
+  <p>Phone Number:
+    <input [(ngModel)]="tenant.phoneNumber" /></p>
+  <p>Financial Debt:
+    <input [(ngModel)]="tenant.financialDebt" /></p>
+  <input type="button" value="Delete" (click)="delete(tenant._id)" />
+  <input type="button" value="Update" (click)="update(tenant)" />
+</div>

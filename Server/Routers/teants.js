@@ -4,13 +4,9 @@ const router = express.Router();
 
 router.get("/",
   async (req, res) => {
-    const id = req.query.id;
-    try {
-      let result = await tenantHandler.get(id);
-      res.sendData(result);
-    } catch (e) {
-      res.sendError();
-    }
+    const search = req.query.search;
+    let result = await tenantHandler.get(search);
+    res.sendData(result);
   });
 
 router.post("/",
@@ -29,7 +25,7 @@ router.put("/",
 
 router.delete("/",
   async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
     let result = await tenantHandler.remove(id);
     res.sendData(result);
   });

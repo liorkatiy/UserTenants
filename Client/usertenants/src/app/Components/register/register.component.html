@@ -1,6 +1,6 @@
 <div>
   <h2>Register</h2>
-  Username: <input>
-  Password: <input>
-  <input type="button" value="Register">
+  Username: <input [(ngModel)]="username">
+  Password: <input [(ngModel)]="password">
+  <input type="button" value="Register" (click)="register()">
 </div>

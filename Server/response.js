@@ -1,6 +1,9 @@
+//response middleware
 function dataSender(req, res, next) {
-  res.sendData = (item) => res.json(sendData(item));
-  res.sendError = (error) => res.json(sendError(error));
+  res.sendData = (item) => {
+    const returnItem = item.error ? sendError(item.error) : sendData(item);
+    res.json(returnItem);
+  }
   next();
 }
 

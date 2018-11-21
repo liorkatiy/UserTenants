@@ -2,10 +2,13 @@
 <div style="text-align:center">
 </div>
 <div>
-  <ul>
+  <ul *ngIf="!isLogin">
     <li><a routerLink="/register">register</a></li>
     <li><a routerLink="/login">login</a></li>
-    <li *ngIf="isLogin"><a routerLink="/login">tenants</a></li>
+  </ul>
+  <ul *ngIf="isLogin">
+    <li><a routerLink="/tenant">tenants</a>
+    <li><a routerLink="/logout">Logout</a>
   </ul>
 </div>
 

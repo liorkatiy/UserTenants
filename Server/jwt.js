@@ -3,7 +3,7 @@ const accountHandler = require("./DBHandlers/accountHandler");
 const {
   JWTSecret
 } = require("./config.json");
-
+const logger = require("./DBHandlers/loggerHandler");
 
 const timeBeforeReToken = 15 * 60;
 const timeBeforeReLogin = timeBeforeReToken * 2;
@@ -23,20 +23,21 @@ async function sign(id) {
  * @param {*} next 
  */
 async function verifyToken(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) {
+  const token = req.headers['authorization']; //get token from header
+  if (!token) { //no token than send error
     res.sendError("login");
     return;
   }
   try {
-    let user = await jwt.verify(token, JWTSecret);
-    const timeSinceLogin = new Date().getTime() / 1000 - user.iat;
-    if (timeSinceLogin > timeBeforeReLogin) {
+    let user = await jwt.verify(token, JWTSecret); // verify the token
+    const timeSinceLogin = new Date().getTime() / 1000 - user.iat; // get the time since token last update
+    if (timeSinceLogin > timeBeforeReLogin) { // user idle for to long auto logout
+      logger.createLog('Login Timeout:' + timeSinceLogin, user.id);
       res.sendError("login");
       return;
     }
 
-    if (timeSinceLogin > timeBeforeReToken) {
+    if (timeSinceLogin > timeBeforeReToken) { // refresh token and compare the current token with the last token in the database
       const newToken = await sign(user.id);
       const valid = await accountHandler.validateToken(user.id, token, newToken);
       if (valid) {
@@ -48,7 +49,7 @@ async function verifyToken(req, res, next) {
     }
     req.user = user;
     next();
-  } catch (e) {
+  } catch (e) { // if error happen send cant authunticate probbly the jwt.verify function failed
     res.sendError("auth");
   }
 }

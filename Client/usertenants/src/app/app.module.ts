@@ -7,8 +7,10 @@ import { AppComponent } from './app.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { LoginComponent } from './Components/login/login.component';
 import { TenantsComponent } from './Components/tenants/tenants.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LogoutComponent } from './components/logout/logout.component';
+
+import { TenantPipe } from './Pipes/tenantsPipe'
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     TenantsComponent,
     RegisterComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    TenantPipe
   ],
   imports: [
     BrowserModule,

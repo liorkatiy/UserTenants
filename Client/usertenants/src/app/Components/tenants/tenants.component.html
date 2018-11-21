@@ -8,8 +8,12 @@
 
 <input placeholder="Search" #searchValue />
 <input type="button" value="search" (click)="search(searchValue.value)" />
-
-<div *ngFor="let tenant of tenants">
+<select [(ngModel)]="debtFilter" name="debtFilter">
+  <option value="all" [value]="all">All Tenants</option>
+  <option value="onlyDebt">Only Financial Debt</option>
+  <option value="noDebt">No Financial Debt</option>
+</select>
+<div *ngFor="let tenant of tenants | tenantPipe: debtFilter">
   <p> Name:
     <input [(ngModel)]="tenant.name" /> </p>
   <p>Address:

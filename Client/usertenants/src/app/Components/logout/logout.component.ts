@@ -9,6 +9,7 @@ import { SessionStorageService } from '../../Services/sessionStorage/session-sto
 })
 export class LogoutComponent implements OnInit {
 
+
   constructor(
     private accountService: AccountService,
     private ssts: SessionStorageService) { }

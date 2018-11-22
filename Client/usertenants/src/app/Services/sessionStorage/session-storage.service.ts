@@ -17,7 +17,7 @@ export class SessionStorageService {
 
   getTokenAsString() {
     const token = sessionStorage.getItem("token");
-    return token;
+    return token ? token : "";
   }
 
   getTokenCookie() {

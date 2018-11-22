@@ -8,7 +8,6 @@ import { RegisterComponent } from './Components/register/register.component';
 import { LoginComponent } from './Components/login/login.component';
 import { TenantsComponent } from './Components/tenants/tenants.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LogoutComponent } from './components/logout/logout.component';
 
 import { TenantPipe } from './Pipes/tenantsPipe'
 
@@ -18,7 +17,6 @@ import { TenantPipe } from './Pipes/tenantsPipe'
     TenantsComponent,
     RegisterComponent,
     LoginComponent,
-    LogoutComponent,
     TenantPipe
   ],
   imports: [

@@ -25,7 +25,9 @@ async function sign(id) {
 async function verifyToken(req, res, next) {
   const token = req.headers['authorization']; //get token from header
   if (!token) { //no token than send error
-    res.sendError("login");
+    res.sendData({
+      error: "login"
+    });
     return;
   }
   try {
@@ -33,7 +35,9 @@ async function verifyToken(req, res, next) {
     const timeSinceLogin = new Date().getTime() / 1000 - user.iat; // get the time since token last update
     if (timeSinceLogin > timeBeforeReLogin) { // user idle for to long auto logout
       logger.createLog('Login Timeout:' + timeSinceLogin, user.id);
-      res.sendError("login");
+      res.sendData({
+        error: "login"
+      });
       return;
     }
 
@@ -43,14 +47,17 @@ async function verifyToken(req, res, next) {
       if (valid) {
         res.cookie("userToken", newToken);
       } else {
-        res.sendError("login");
-        return;
+        res.sendData({
+          error: "login"
+        });
       }
     }
     req.user = user;
     next();
   } catch (e) { // if error happen send cant authunticate probbly the jwt.verify function failed
-    res.sendError("auth");
+    res.sendData({
+      error: "login"
+    });
   }
 }
 

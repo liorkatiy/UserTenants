@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.username, this.password)
       .subscribe(response => {
         if (response.body.item) {
-          this.loginService.logged(true);
-          this.ssts.getTokenCookie();
+          this.loginService.logged(true);// alert user logged in
+          this.ssts.getTokenCookie(); //set cookie in session storage
           alert("Login success");
         } else {
           alert("login failed");

@@ -8,7 +8,7 @@
   </ul>
   <ul *ngIf="isLogin">
     <li><a routerLink="/tenant">tenants</a>
-    <li><a routerLink="/logout">Logout</a>
+    <li><a [routerLink]="" (click)="logout()">Logout</a>
   </ul>
 </div>
 

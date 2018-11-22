@@ -1,3 +1,4 @@
+//tenant interface
 interface Tenant {
   _id: string;
   name: string;

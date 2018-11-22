@@ -32,6 +32,7 @@ router.post("/register",
   });
 
 router.post("/logout",
+  jwt.verifyToken,
   async (req, res) => {
     await logger.createLog("User LogOut", req.user.id);
     res.sendData(true);

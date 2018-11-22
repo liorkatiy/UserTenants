@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { config } from '../config'
 import { TenantHttpService } from '../tenantHttpService/tenant-http.service';
 
+
+//service for tenants CRUD
 @Injectable({
   providedIn: 'root'
 })

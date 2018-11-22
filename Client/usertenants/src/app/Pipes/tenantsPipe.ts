@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+//pipe to filter tenants
 @Pipe({ name: 'tenantPipe' })
 export class TenantPipe implements PipeTransform {
   transform(tenants: Tenant[], filter: string) {

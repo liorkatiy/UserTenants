@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { SessionStorageService } from '../sessionStorage/session-storage.service';
 import { map } from "rxjs/operators";
 
+//general http service to hadle server response and errors
 @Injectable({
   providedIn: 'root'
 })
@@ -17,47 +18,30 @@ export class TenantHttpService {
     return this.http
       .get<serverResponse<T>>(url, {
         headers: { 'authorization': this.ssts.getTokenAsString() },
+        withCredentials: true,
         params
       })
-      .subscribe(res => {
-        if (res.error) {
-          alert(res.error);
-          if (res.error === 'login')
-            this.ssts.removeToken();
-        } else {
-          func(res.item);
-        }
-      });
+      .subscribe(this.handleServerResponse(func));
   }
 
   post<T>(url: string, body: any, func: (item: T) => void) {
     return this.http
       .post<serverResponse<T>>(url, body,
-        { headers: { 'authorization': this.ssts.getTokenAsString() } })
-      .subscribe(res => {
-        if (res.error) {
-          alert(res.error);
-          if (res.error === 'login')
-            this.ssts.removeToken();
-        } else {
-          func(res.item);
-        }
-      });
+        {
+          headers: { 'authorization': this.ssts.getTokenAsString() },
+          withCredentials: true
+        })
+      .subscribe(this.handleServerResponse(func));
   }
 
   put<T>(url: string, body: any, func: (item: T) => void) {
     return this.http
       .put<serverResponse<T>>(url, body,
-        { headers: { 'authorization': this.ssts.getTokenAsString() } })
-      .subscribe(res => {
-        if (res.error) {
-          alert(res.error);
-          if (res.error === 'login')
-            this.ssts.removeToken();
-        } else {
-          func(res.item);
-        }
-      });
+        {
+          headers: { 'authorization': this.ssts.getTokenAsString() },
+          withCredentials: true
+        })
+      .subscribe(this.handleServerResponse(func));
   }
 
   delete<T>(url: string, params: any, func: (item: T) => void) {
@@ -65,16 +49,22 @@ export class TenantHttpService {
       .delete<serverResponse<T>>(url,
         {
           headers: { 'authorization': this.ssts.getTokenAsString() },
+          withCredentials: true,
           params
         })
-      .subscribe(res => {
-        if (res.error) {
-          alert(res.error);
-          if (res.error === 'login')
-            this.ssts.removeToken();
-        } else {
-          func(res.item);
-        }
-      });
+      .subscribe(this.handleServerResponse(func));
+  }
+
+  handleServerResponse<T>(func: (item: T) => void) {
+    return res => {
+      if (res.error) {//server return error
+        alert("ERROR: " + res.error);
+        if (res.error === 'login')//if login failure (no token or token timeout) remove token
+          this.ssts.removeToken();
+      } else {
+        this.ssts.getTokenCookie(); // login success save the token
+        func(res.item); //call the function with the server response
+      }
+    }
   }
 }

@@ -5,9 +5,10 @@
   <input placeholder="Financial Debt" [(ngModel)]="newTenant.financialDebt" name="financialdebt" />
   <input type="submit" (click)="add()" />
 </form>
-
+<br>
 <input placeholder="Search" #searchValue />
 <input type="button" value="search" (click)="search(searchValue.value)" />
+<br>
 <select [(ngModel)]="debtFilter" name="debtFilter">
   <option value="all" [value]="all">All Tenants</option>
   <option value="onlyDebt">Only Financial Debt</option>
